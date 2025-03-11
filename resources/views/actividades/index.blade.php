@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-
+    
 .container-act {
     margin: 40px auto; /* Margen superior e inferior de 40px y centrado horizontal */
     padding: 20px; /* Espaciado interno */
@@ -14,6 +14,8 @@
 .card-act {
     border-right: 5px solid #752e0f;/* Borde lateral café */
     height: 100%; /* Para que todas las tarjetas tengan la misma altura */
+    width: 100;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -35,6 +37,11 @@
     color: antiquewhite;
     font-size: 1.2rem;
     font-weight: bold;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 4 líneas */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 
 .card-text-act {
@@ -52,8 +59,6 @@
     width: 100%;
     aspect-ratio: 1 / 1; /* Mantiene la imagen cuadrada */
     object-fit: cover; /* Asegura que la imagen se recorte sin deformarse */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
 }
 
 .boton-act {
@@ -63,11 +68,48 @@
 .boton-act:hover {
     background-color: #e19d65;
 }
-
-
-
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if ($errors->any())
+<script>
+    let errorMessages = `
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-sm">• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `;
+
+    Swal.fire({
+                title: 'Espera...',
+                html: errorMessages,
+                icon: 'error',
+                position: 'top-end', // Coloca la alerta en la esquina superior derecha
+                showConfirmButton: false, // Oculta el botón de 'OK'
+                timer: 1500,
+                timerProgressBar: true,
+                backdrop: false, // No oscurece la pantalla
+                allowOutsideClick: true,
+                customClass: {
+                    popup: 'swal-popup', 
+                    title: 'swal-title', 
+                    text: 'swal-text',
+                },
+            });
+</script>
+@endif
 <div class="container-act mt-4">
+
+    <h2 class="text-center mb-4" style="color: #752e0f">Actividades</h2>
+     {{-- Formulario de buscador exclusivo de actividades --}}
+    <div class="d-flex justify-content-end align-items-center mb-4">
+        <form action="{{ route('actividades.buscar') }}" method="POST" class="d-flex mb-4">
+            @csrf
+            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar actividades..." class="form-control me-2">
+            <button type="submit" class="btn" style="background-color: #752e0f color: #e19d65">Buscar</button>
+        </form>
+    </div>
+    {{-- contenido del index --}}
     <div class="row">
         @foreach($actividades as $actividad)
             <div class="col-md-4 mb-4">

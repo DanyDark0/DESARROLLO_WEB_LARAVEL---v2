@@ -1,6 +1,4 @@
-@extends('layouts.userapp')
-
-@section('content')
+<x-app-layout>
 <div class="container">
     <h1>Editar Actividad</h1>
             <!-- Muestra errores generales -->
@@ -25,4 +23,4 @@
 
     <a href="{{ route('actividades.admin') }}" class="btn btn-secondary mt-3">Cancelar</a>
 </div>
-@endsection
+</x-app-layout>

@@ -2,8 +2,7 @@
 
 @section('content')
 <style>
-
-.container-act {
+    .container-act {
     margin: 40px auto; /* Margen superior e inferior de 40px y centrado horizontal */
     padding: 20px; /* Espaciado interno */
     max-width: 1200px; /* Limita el ancho del contenedor */
@@ -33,7 +32,7 @@
     padding: 15px;
 }
 
-.card-title-act {
+.card-title-buscador {
     color: antiquewhite;
     font-size: 1.2rem;
     font-weight: bold;
@@ -44,7 +43,7 @@
     text-overflow: ellipsis;
 }
 
-.card-text-act {
+.card-text {
     color: antiquewhite;
     flex-grow: 1;
     overflow: hidden;
@@ -59,8 +58,6 @@
     width: 100%;
     aspect-ratio: 1 / 1; /* Mantiene la imagen cuadrada */
     object-fit: cover; /* Asegura que la imagen se recorte sin deformarse */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
 }
 
 .boton-act {
@@ -70,30 +67,42 @@
 .boton-act:hover {
     background-color: #e19d65;
 }
-
-
-
 </style>
 <div class="container-act mt-4">
-    <h2 class="text-center mb-4" style="color: #752e0f">Convocatorias</h2>
-    <div class="row">
-        @foreach($convocatorias as $convocatoria)
-            <div class="col-md-4 mb-4">
-                <div class="card-act mb-4">
-                    <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de convocatoria">
-                    <div class="card-body-act">
-                        <h5 class="card-title-act">{{ $convocatoria->titulo }}</h5> <!-- Mostrar título -->
-                        <p class="card-text-act">{!! $convocatoria->descripcion_truncado !!}</p> <!-- Mostrar descripción -->
-                        <a href="{{ route('convocatorias.show', $convocatoria->slug) }}" class="boton-act btn">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: #752e0f">Resultados de la búsqueda</h2>
+        
+        <!-- Buscador -->
+        <form action="{{ route('actividades.buscar') }}" method="POST" class="d-flex mb-4">
+            @csrf
+            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar actividades..." class="form-control me-2">
+            <button type="submit" class="btn" style="background-color: #752e0f color: #e19d65">Buscar</button>
+        </form>
     </div>
 
-    <!--paginacion-->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $convocatorias->links() }}
+    @if($actividades->isEmpty())
+        <p class="text-center">No se encontraron resultados.</p>
+    @else
+        <div class="row-4">
+            @foreach($actividades as $actividad)
+                <div class="col-md-4 mb-4">
+                    <div class="card-act">
+                        <img src="{{ $actividad->url_img1 ? asset($actividad->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de actividad">
+                        <div class="card-body-act">
+                            <h5 class="card-title-buscador">{{ $actividad->titulo }}</h5>
+                            <div class="card-text">{!! Str::limit($actividad->descripcion, 100) !!}</div>
+                            <a href="{{ route('actividades.show', $actividad->slug) }}" class="btn boton-act">Ver más</a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
+    <!-- Paginación -->
+    <div class="mt-4">
+        {{ $actividades->appends(['keyword' => request('keyword')])->links() }}
     </div>
 </div>
 @endsection

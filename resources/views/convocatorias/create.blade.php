@@ -1,11 +1,6 @@
 @extends('layouts.userapp')
 
 @section('content')
-<style>
-    .fecha {
-        
-    }
-</style>
 <div class="container">
     <h1>Crear Nueva Convocatoria</h1>
         <!-- Muestra errores generales -->
@@ -24,7 +19,7 @@
         <!-- Título -->
         <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
-            <input type="text" name="titulo" id="titulo" class="form-control">
+            <input type="text" name="titulo" id="titulo" class="form-control" value="{{ old('titulo')}}">
             <!-- Manejo de errores en el validador-->
             @error('titulo')
                 <small class="text-danger">{{ $message }}</small>
@@ -34,13 +29,21 @@
         <!-- Descripción -->
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción</label>
-            <textarea name="descripcion" id="descripcion" class="form-control" rows="4"></textarea>
+            <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ old('descripcion')}}</textarea>
+                        <!-- Manejo de errores en el validador-->
+                        @error('descripcion')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
         </div>
         
         <!-- Fecha -->
         <div class="fecha mb-3">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control" required>
+            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha')}}">
+                        <!-- Manejo de errores en el validador-->
+                        @error('fecha')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
         </div>
         
         <!-- Imagen 1 -->
@@ -84,8 +87,13 @@
             branding: false,
             automatic_uploads: true,
             setup: function(editor) {
+                editor.on('init', function() {
+                    // Cargar el valor de old() en TinyMCE al iniciar
+                    editor.setContent(document.getElementById('descripcion').value);
+                });
+
                 editor.on('change', function() {
-                    tinymce.triggerSave(); // Sincroniza el contenido
+                    tinymce.triggerSave(); // Sincroniza el contenido con el textarea oculto
                 });
             }
         });

@@ -63,8 +63,9 @@ class convocatoriasController extends Controller
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
-            'fecha' => 'nullable|date',
+            'fecha' => 'required|date',
         ], [
+            'fecha.required' => 'La fecha es obligatoria',
             'descripcion.required' => 'Agregue una descripcion.',
             'titulo.required' => 'El título es obligatorio.',
             'titulo.string' => 'El título debe ser un texto válido.',
@@ -151,14 +152,15 @@ class convocatoriasController extends Controller
     public function update(Request $request, $slug)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|unique:convocatorias',
+            'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
-            'fecha' => 'nullable|date',
+            'fecha' => 'required|date',
         ], [
+            'fecha.required' => 'La fecha es obligatoria',
             'descripcion.required' => 'Agregue una descripcion.',
             'titulo.required' => 'El título es obligatorio.',
             'titulo.string' => 'El título debe ser un texto válido.',

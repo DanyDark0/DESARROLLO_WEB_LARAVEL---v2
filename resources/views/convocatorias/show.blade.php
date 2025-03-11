@@ -44,10 +44,10 @@
                 <!-- Imágenes -->
                 <div class="text-center my-4">
                     @if($convocatorias->url_img1)
-                        <img src="{{ asset($convocatorias->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 400px; height: auto; margin: auto;">
+                        <img src="{{ asset($convocatorias->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 250px; height: auto; margin: auto;">
                     @endif
                     @if($convocatorias->url_img2)
-                        <img src="{{ asset($convocatorias->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto; margin: auto;">
+                        <img src="{{ asset($convocatorias->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 250px; height: auto; margin: auto;">
                     @endif
                 </div>
                 {{-- descripcion --}}

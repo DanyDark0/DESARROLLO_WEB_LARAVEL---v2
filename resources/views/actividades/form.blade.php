@@ -8,7 +8,7 @@
     <!-- Descripción -->
     <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
-        <textarea name="descripcion" id="descripcion" class="form-control" rows="4" required>{{ old('descripcion', $actividad->descripcion ?? '') }}</textarea>
+        <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ old('descripcion', $actividad->descripcion ?? '') }}</textarea>
     </div>
 
 <!-- Fecha -->

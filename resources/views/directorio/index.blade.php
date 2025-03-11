@@ -49,7 +49,7 @@
 </style>
 
 <div class="container">
-    <h2 class="text-center mb-4">Directorio</h2>
+    <h2 class="text-center mb-4" style="color: #752e0f">Directorio</h2>
         @php
             $ordenCatedras = [
                 'Coordinador',

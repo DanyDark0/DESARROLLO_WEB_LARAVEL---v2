@@ -46,6 +46,11 @@
   } 
   .card-title {
     color: black;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
   .card-text {
     display: -webkit-box;

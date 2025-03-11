@@ -37,10 +37,10 @@
     <!-- Imágenes -->
     <div class="text-center my-4">
         @if($actividad->url_img1)
-            <img src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 300px; height: auto; margin: auto;">
+            <img src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 250px; height: auto; margin: auto;">
         @endif
         @if($actividad->url_img2)
-            <img src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 300px; height: auto; margin: auto;">
+            <img src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 250px; height: auto; margin: auto;">
         @endif
     </div>
     

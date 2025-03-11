@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuscadorController;
 use App\Http\Controllers\convocatoriasController;
 use App\Http\Controllers\directorioController;
+use App\Http\Controllers\DocumentosController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -48,6 +49,7 @@ Route::get('/actividades/admin', [actividadesController::class, 'admin'])->name(
  Route::get('/actividades/{slug}/editar', [actividadesController::class, 'edit'])->name('actividades.edit');
  Route::put('/actividades/{slug}', [actividadesController::class, 'update'])->name('actividades.update');
  Route::delete('/actividades/{slug}', [actividadesController::class, 'destroy'])->name('actividades.destroy');
+ Route::post('/actividades/buscar', [actividadesController::class, 'search_actividad'])->name('actividades.buscar');
 
  //Rutas del CRUD de directorio
  Route::get('/directorio/admin', [directorioController::class, 'admin'])->name('directorio.admin');
@@ -66,7 +68,17 @@ Route::post('/convocatorias', [convocatoriasController::class, 'store'])->name('
 Route::get('/convocatorias/{slug}', [convocatoriasController::class, 'show'])->name('convocatorias.show');
 Route::get('/convocatorias/{slug}/editar', [convocatoriasController::class, 'edit'])->name('convocatorias.edit');
 Route::put('/convocatorias/{slug}', [convocatoriasController::class, 'update'])->name('convocatorias.update');
-Route::delete('/convocatorias/{slug}', [convocatoriasController::class, 'destroy'])->name('convocatorias.destroy');
+Route::delete('/convocatorias/{id}', [convocatoriasController::class, 'destroy'])->name('convocatorias.destroy');
+
+//Rutas del CRUD de documentos 
+Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos');
+Route::get('/documentos/admin', [DocumentosController::class, 'admin'])->name('documentos.admin');
+Route::get('/documentos/crear', [DocumentosController::class, 'create'])->name('documentos.create');
+Route::post('/documentos', [DocumentosController::class, 'store'])->name('documentos.store');
+Route::get('/documentos/{slug}', [DocumentosController::class, 'show'])->name('documentos.show');
+Route::get('/documentos/{slug}/editar', [DocumentosController::class, 'edit'])->name('documentos.edit');
+Route::put('/documentos/{slug}', [DocumentosController::class, 'update'])->name('documentos.update');
+Route::delete('/documentos/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
 
  //ruta del buscador
 Route::post('/buscador', [BuscadorController::class, 'search'])->name('buscador');
@@ -91,11 +103,4 @@ Route::post('/buscador', [BuscadorController::class, 'search'])->name('buscador'
 
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::middleware(['guest'])->group(function () {
-    Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [UserController::class, 'register']);
-});
+require __DIR__.'/auth.php';
