@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Documentos;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DocumentosController extends Controller
 {
@@ -30,6 +32,7 @@ class DocumentosController extends Controller
     }
 
     public function admin() {
+        
         $documentos = Documentos::paginate(10);
         return view('documentos.admin', compact('documentos'));
     }
@@ -96,8 +99,15 @@ class DocumentosController extends Controller
     }
 
     public function update(Request $request, $slug) {
+        $documento = Documentos::where('slug', $slug)->firstOrFail();
+
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
+        'titulo' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('actividades')->ignore($documento->id),
+        ],
             'descripcion' => 'nullable|string',
             'doc1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
             'doc2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
@@ -113,7 +123,6 @@ class DocumentosController extends Controller
                 ->withInput();
         }
 
-        $documento = Documentos::where('slug', $slug)->firstOrFail();
         $documento->titulo = $request->titulo;
         $documento->descripcion = $request->descripcion;
 

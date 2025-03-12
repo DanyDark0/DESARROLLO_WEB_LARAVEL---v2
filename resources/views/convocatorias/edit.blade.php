@@ -1,7 +1,5 @@
-@extends('layouts.userapp')
-
-@section('content')
-<div class="container">
+<x-app-layout>
+<div class="container mb-4">
     <h1>Editar Convocatoria</h1>
         <!-- Muestra errores generales -->
         @if ($errors->any())
@@ -34,7 +32,7 @@
         <!-- Fecha -->
         <div class="mb-3">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control"
+            <input type="date" name="fecha" id="fecha" class="form-control w-32"
                 value="{{ $convocatoria->fecha }}" required>
         </div>
 
@@ -113,5 +111,4 @@
         });
     });
     </script>
-@endsection
-
+</x-app-layout>

@@ -7,6 +7,8 @@ use App\Models\Actividad;
 use illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class actividadesController extends Controller
 {
 
@@ -162,8 +164,10 @@ class actividadesController extends Controller
 
     public function update(Request $request, $slug)
     {
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
+
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
+            'titulo' => ['required','string','max:255',Rule::unique('actividades')->ignore($actividad->id), ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -183,7 +187,6 @@ class actividadesController extends Controller
                 ->withInput();
         }
 
-        $actividad = Actividad::where('slug', $slug)->firstOrFail();
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;

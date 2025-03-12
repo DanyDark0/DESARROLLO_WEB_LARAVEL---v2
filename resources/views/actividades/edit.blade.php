@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="container">
+<div class="container mb-4">
     <h1>Editar Actividad</h1>
             <!-- Muestra errores generales -->
             @if ($errors->any())

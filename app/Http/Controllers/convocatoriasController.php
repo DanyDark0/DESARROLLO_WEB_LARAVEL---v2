@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Convocatorias;
 use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class convocatoriasController extends Controller
 {
@@ -151,8 +152,16 @@ class convocatoriasController extends Controller
 
     public function update(Request $request, $slug)
     {
+
+        $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
+
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
+            'titulo' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('actividades')->ignore($convocatoria->id),
+            ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -184,7 +193,7 @@ class convocatoriasController extends Controller
                 ->withInput();
         }
 
-        $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
+
         $convocatoria->titulo = $request->titulo;
         $convocatoria->descripcion = $request->descripcion;
         $convocatoria->fecha = $request->fecha;

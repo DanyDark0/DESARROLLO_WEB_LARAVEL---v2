@@ -25,25 +25,22 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap overflow-hidden truncate max-w-[200px]">{{ Str::limit($actividad->titulo, 80, '...') }}</td>
                             <td class="py-3 px-6 text-left">{{ $actividad->fecha }}</td>
                             <td class="py-3 px-6 text-center">
+                                <div class="flex justify-center gap-2">
+                            
+                                <!-- Botón Editar -->
+                                <a href="{{ route('actividades.edit', $actividad->slug) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded text-sm">
+                                    Editar
+                                </a>
 
-                                {{-- Dropdown de Acciones --}}
-                            <div x-data="{ open: false }" class="relative inline-block">
-                                    <button @click="open = !open" class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded text-sm">
-                                        Opciones ▼
-                                    </button>
-
-                                {{-- contenido del dropdown --}}
-                            <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-36 bg-white border border-gray-300 rounded shadow-md z-10 flex flex-col">
-                                {{-- Editar --}}
-                                <a href="{{ route('actividades.edit', $actividad->slug) }}" class="block bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded text-sm inline-block">Editar</a>
-                                {{-- Eliminar --}}
-                                <form action="{{ route('actividades.destroy', $actividad->slug) }}" method="POST" class="inline-block">
+                                <!-- Botón Eliminar -->
+                                <form action="{{ route('actividades.destroy', $actividad->slug) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta actividad?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-left text-sm" onclick="return confirm('¿Estás seguro de eliminar esta actividad?');">Eliminar</button>
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm">
+                                        Eliminar
+                                    </button>
                                 </form>
-                            </div>
-                        </div>
+                               </div>
                             </td>
                         </tr>
                     @endforeach

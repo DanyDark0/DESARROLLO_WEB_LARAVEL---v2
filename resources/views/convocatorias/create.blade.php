@@ -1,11 +1,9 @@
-@extends('layouts.userapp')
-
-@section('content')
-<div class="container">
-    <h1>Crear Nueva Convocatoria</h1>
+<x-app-layout>
+<div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Crear Nueva Convocatoria</h1>
         <!-- Muestra errores generales -->
         @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -14,12 +12,13 @@
         </div>
     @endif
 
-    <form action="{{ route('convocatorias.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('convocatorias.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
+
         <!-- Título -->
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input type="text" name="titulo" id="titulo" class="form-control" value="{{ old('titulo')}}">
+        <div>
+            <label for="titulo" class="block text-gray-700 font-semibold">Título</label>
+            <input type="text" name="titulo" id="titulo" class="w-full p-2 border rounded-lg" value="{{ old('titulo')}}">
             <!-- Manejo de errores en el validador-->
             @error('titulo')
                 <small class="text-danger">{{ $message }}</small>
@@ -37,16 +36,15 @@
         </div>
         
         <!-- Fecha -->
-        <div class="fecha mb-3">
+        <div class="mb-3">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha')}}">
+            <input type="date" name="fecha" id="fecha" class="form-control"  value="{{ old('fecha')}}">
                         <!-- Manejo de errores en el validador-->
                         @error('fecha')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
         </div>
-        
-        <!-- Imagen 1 -->
+                <!-- Imagen 1 -->
         <div class="mb-3">
             <label for="url_img1" class="form-label">Imagen 1</label>
             <input type="file" name="url_img1" id="url_img1" class="form-control" accept=".jpeg,.png,.jpg,.gif">
@@ -69,8 +67,9 @@
             <label for="archivo2" class="form-label">Archivo 2</label>
             <input type="file" name="archivo2" id="archivo2" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
         </div>
-        
-        <button type="submit" class="btn btn-success mt-3">Guardar Convocatoria</button>
+        <div class="flex h-16">
+        <button type="submit" class="w-30 bg-green-500 hover:bg-green-600 text-white  py-2 px-3 text-center rounded">Guardar Convocatoria</button>
+        </div>
     </form>
 </div>
 
@@ -119,4 +118,4 @@
         });
     });
 </script>
-@endsection
+</x-app-layout>

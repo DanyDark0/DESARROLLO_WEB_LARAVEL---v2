@@ -71,7 +71,7 @@
                 </label>
             </div>
             
-            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Guardar Actividad</button>
+            <button type="submit" class="w-30 bg-green-500 hover:bg-green-600 text-white  py-2 px-3 text-center rounded">Guardar Actividad</button>
         </form>
     </div>
 

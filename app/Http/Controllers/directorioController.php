@@ -12,7 +12,7 @@ use illuminate\Support\Str;
 class directorioController extends Controller
 {
     public function admin() {
-        $directorio = Directorio::all();
+        $directorio = Directorio::paginate(10);
         return view('directorio.admin', compact('directorio'));
     }
     public function index() {
@@ -31,6 +31,9 @@ class directorioController extends Controller
             'catedra' => ['required', Rule::in(['Coordinador', 'Asistente de coordinación', 'Comité Técnico', 'Comité Honorifico', 'Colaboradores'])],
             'correo' => 'nullable|email|max:255',
             'telefono' => 'nullable|string|max:20',
+        ], [
+            'nombre.required' => 'Es necesario ingresar el nombre',
+            'correo.email' => 'El correo debe ser valido @',
         ]);
 
         if ($validator->fails()) {

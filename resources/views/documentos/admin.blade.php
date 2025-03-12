@@ -25,6 +25,7 @@
                     <td class="py-3 px-6 text-left">{{ Str::limit($documento->doc1, 20, '...') }}</td>
                     <td class="py-3 px-6 text-left">{{ Str::limit($documento->doc2, 20, '...') }}</td>
                     <td>
+                        <div class="flex justify-center gap-2">
                         <!-- Editar -->
                         <a href="{{ route('documentos.edit', $documento->slug) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded text-sm">Editar</a>
 
@@ -34,6 +35,7 @@
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm" onclick="return confirm('¿Estás seguro de eliminar esta documento?');">Eliminar</button>
                         </form>
+                    </div>
                     </td>
                 </tr>
             @endforeach
